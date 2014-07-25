@@ -1,7 +1,14 @@
 ###Challenge
 
+## See me running
+```
+node server.js
+```
+Then open ```127.0.0.1:5000```,
 
-Create a word cloud that displays the topics in the `topics.json` file in this Gist.
+## Description
+
+Create a word cloud that displays the topics in the `apps\assets\topics.json` file in this Gist.
 
 - The label.property of each topic should be the 'word' in the word cloud
 - Each topic should have one of 6 different text sizes, with the most popular topics largest, and least popular smallest
