@@ -5,6 +5,8 @@ Run in terminal: ```node server.js``` (server is needed for async loading of the
 
 Then open in your browser: ```127.0.0.1:5000```.
 
+The tests are at: ```http://127.0.0.1:5000/test/test.html```.
+
 ## Description
 
 Create a word cloud that displays the topics in the `apps\assets\topics.json` file in this Gist.
