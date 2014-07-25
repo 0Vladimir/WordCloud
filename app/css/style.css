@@ -1,0 +1,23 @@
+* { margin: 0; padding: 0; }
+
+#cloud    { 
+    margin: 50px;
+    white-space: nowrap;
+    width: 600px; 
+    height: 300px; 
+}
+
+.word     { 
+    position: absolute; 
+    color: grey;
+}
+
+.negative { color: red; }
+.positive { color: green; }
+
+.text-xs  { font-size: 14px; }
+.text-s   { font-size: 16px; }
+.text-m   { font-size: 18px; }
+.text-l   { font-size: 22px; }
+.text-xl  { font-size: 26px; }
+.text-xxl { font-size: 34px; }

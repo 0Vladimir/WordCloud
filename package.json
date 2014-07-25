@@ -1,0 +1,21 @@
+{
+  "name": "WordCloud",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "~1.9.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.21.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}

@@ -1,0 +1,7 @@
+            <h2>Information on topic: <%= label %></h2>
+            <h3>Total mentions: <%= volume %></h3>
+            <ul>
+                <li>Positive Mentions: <span class="positive"><%= sentiment.positive || 0 %></span></li>
+                <li>Neutral Mentions: <%= sentiment.neutral || 0 %></li>
+                <li>Negative Mentions: <span class="negative"><%= sentiment.negative || 0%></span></li>
+            </ul>
