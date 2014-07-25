@@ -9,15 +9,7 @@ define(['jquery',
         "use strict";
 
         // Generate css classes for text size based on the available importance levels from the model.     
-        var enumImportance = function (argument) {
-                var cssClasses = [];
-
-                _.each(Model.TopicModelImportanceLevels, function (el) {
-                    cssClasses.push('text-' + el);
-                });
-
-                return cssClasses;
-            }(),
+        var enumImportance = _.map(Model.TopicModelImportanceLevels, function (level) { return 'text-' + level; }),
             thresholdPositive = 60,
             thresholdNegative = 40;
 
