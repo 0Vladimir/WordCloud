@@ -1,10 +1,9 @@
 ###Challenge
 
 ## See me running
-```
-node server.js
-```
-Then open ```127.0.0.1:5000```,
+Run in terminal: ```node server.js``` (server is needed for async loading of the json).
+
+Then open in your browser: ```127.0.0.1:5000```.
 
 ## Description
 
