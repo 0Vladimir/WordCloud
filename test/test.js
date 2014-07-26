@@ -10,7 +10,7 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
           });
       });
 
-      describe('List', function () {
+      describe('Models List', function () {
           var list = new Models.TopicList(JSON.parse(strTopics).topics);
           list.recalculateImportances();
 
@@ -18,15 +18,15 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
               list.models.length.should.equal(30);
           });
 
-          it('first should have importance 5', function () {
+          it('first element should have importance 5', function () {
               list.at(0).get('importance').should.equal(5);    
           });
 
-          it('first should have importance 0', function () {
+          it('first element should have importance 0', function () {
               list.at(29).get('importance').should.equal(0);
           });
 
-          it('change volume on last, promote to first', function() {
+          it('the last element should be promoted to first if its volume is changed to be highest', function() {
               var last = list.at(0);
               var id = last.get('id');
               last.set('volume', list.at(29).get('volume') + 1);
@@ -38,24 +38,26 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
 
 
       describe('Views', function () {
-          var $cloud;
+          var $cloud, 
+              $words;
 
           before(function () {
               var topics = new Models.TopicList(JSON.parse(strTopics).topics);
               topics.recalculateImportances();
               $cloud = new Views.List({collection: topics, toCalculate: false });
+              $words = $cloud.$el.find('.word');
           });
 
-          it('test css classes depending on sentiment and volume', function() {
-              expect($cloud.$el.find('.word').eq(0)).to.have.class('positive');
-              expect($cloud.$el.find('.word').eq(1)).to.have.class('negative');
-              expect($cloud.$el.find('.word').eq(0)).to.have.class('text-xxl');
-              expect($cloud.$el.find('.word').eq(29)).to.have.class('text-xs');
+          it('words should have css classes set based on their volume/importance', function() {
+              expect($words.eq(0)).to.have.class('positive');
+              expect($words.eq(1)).to.have.class('negative');
+              expect($words.eq(0)).to.have.class('text-xxl');
+              expect($words.eq(29)).to.have.class('text-xs');
           });
 
-          it('test info panel', function () {
+          it('info panel should be visible and populated after clicking a word', function () {
               expect($('#metadata')).to.be.empty;
-              $cloud.$el.find('.word').eq(0).trigger('click');
+              $words.eq(0).trigger('click');
               expect($('#metadata')).not.to.be.empty;
               expect($('#metadata').find('h2')).to.have.html('Information on topic: Berlin');
               expect($('#metadata').find('h3')).to.have.html('Total mentions: 165');
@@ -63,7 +65,36 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
               expect($('#metadata').find('.negative')).to.have.html('3');
           });
 
-      })
+          it('the words shouldn\'t intersect', function () {
+              // This is an approximation because getBoundingClientRect() in Javascript
+              // does not wrap tightly around text, so there is some empty space around text nodes.
+              var $w = $words[0];
+              var bb = $w.getBoundingClientRect();
+
+              var testIntersection = function($w1, $w2) {
+                  var bb1 = $w1.getBoundingClientRect();
+                  var bb2 = $w2.getBoundingClientRect();
+
+                  return !(bb2.left > bb1.right || 
+                           bb2.right < bb1.left || 
+                           bb2.top > bb1.bottom ||
+                           bb2.bottom < bb1.top);
+              }
+
+              var isIntersection = false;
+              $words.each(function(index, $word1) {
+                  $words.each(function(index, $word2) {
+                      if ($word1 !== $word2 && !isIntersection) {
+                          if(testIntersection($word1, $word2)) {
+                              isIntersection = true;
+                          }
+                      }
+                  });
+              });
+              chai.assert.notOk(isIntersection, 'There are words that intersect');
+          });
+
+      });
 
  
   });

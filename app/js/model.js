@@ -31,7 +31,7 @@ define(['backbone'], function (Backbone) {
         },
 
         // Simple algorithm to calculate importances. All collection members are equaly(-ish)
-        //  split into as many categories as there are enumImportance values (i.e. importance 
+        //  split into as many categories as there are TopicModelImportanceLevels values (i.e. importance 
         //  levels). Meaning that if there are 100 members and 5 importance levels, the first 
         //  20 members will have importance 5, the following 20 will have importance 4 etc.
         // Of course, this algorithm can be more complex, for example, taking into account 

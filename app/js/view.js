@@ -50,7 +50,7 @@ define(['jquery',
             Info = Backbone.View.extend({
                 el: '#metadata',
 
-                template: _.template(tplInfo),// _.template($('#tmpl-metadata-box').html()),
+                template: _.template(tplInfo),
 
                 initialize: function () {
                     this.render();
@@ -97,7 +97,7 @@ define(['jquery',
                     // Whenever the horizontal "line" is full, go up or down alternately
                     var direction = 1;
                     // Leave some room around the words
-                    var margin = 5;
+                    var margin = 10;
 
                     // Start at the end, as that's the most important word and it should be at the center
                     for (var i = this.collection.length - 1; i >= 0; i--) {
