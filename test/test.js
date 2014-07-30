@@ -18,6 +18,10 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
               list.models.length.should.equal(30);
           });
 
+          it('last element should have label "Berlin"', function () {
+              list.at(29).get('label').should.equal("Berlin");
+          });
+
           it('first element should have importance 5', function () {
               list.at(0).get('importance').should.equal(5);    
           });
@@ -81,17 +85,24 @@ define([ 'chai', 'model', 'view', 'text!app/assets/topics.json', 'chai-jquery'],
                            bb2.bottom < bb1.top);
               }
 
-              var isIntersection = false;
+              var isIntersection = false,
+                  label1,
+                  label2;
+
+
               $words.each(function(index, $word1) {
                   $words.each(function(index, $word2) {
                       if ($word1 !== $word2 && !isIntersection) {
                           if(testIntersection($word1, $word2)) {
+                              label1 = $($word1).html();
+                              label2 = $($word2).html();
                               isIntersection = true;
                           }
                       }
                   });
               });
-              chai.assert.notOk(isIntersection, 'There are words that intersect');
+
+              chai.assert.notOk(isIntersection, 'These intersect: ' + label1 + ', ' + label2);
           });
 
       });
