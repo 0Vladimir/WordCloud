@@ -127,9 +127,8 @@ define(['jquery',
 
                                 // Depending on the direction, move upwards/downwards and reset the helpers
                                 direction > 0 ? 
-                                    currY = bottommost = bottommost + box.height + margin :
-                                    currY = topmost = topmost - box.height - margin;
-
+                                    currY = bottommost = bottommost + box.height + 3*margin :
+                                    currY = topmost = topmost - box.height - 3*margin;
                                 // Change the direction for the next new line
                                 direction *= -1;
 
@@ -140,7 +139,7 @@ define(['jquery',
                             }
                         }
 
-                        $topic.$el.css({left: currX, top: currY});
+                        $topic.$el.css({left: currX, top: currY - box.height/2});
                     }
 
                     return this;

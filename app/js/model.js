@@ -30,23 +30,29 @@ define(['backbone'], function (Backbone) {
             });
         },
 
-        // Simple algorithm to calculate importances. All collection members are equaly(-ish)
-        //  split into as many categories as there are TopicModelImportanceLevels values (i.e. importance 
-        //  levels). Meaning that if there are 100 members and 5 importance levels, the first 
-        //  20 members will have importance 5, the following 20 will have importance 4 etc.
-        // Of course, this algorithm can be more complex, for example, taking into account 
-        //  distribution and repetition/density of certain volumes etc. For a coding challenge, 
-        //  I hope this is good enough.
-        recalculateImportances: function (models) {
+        // Sligthly more advanced algorithm to calculate importances. The volumes are divided
+        //  into ranges of equal length, where each range is one level of importance.
+        // Example. Minimum volume: 3, maximal volume: 165, importance levels: 6.
+        //  (165 - 3) / 6 = 27, which means that the importances will be distributed as follows:
+        //  1: 3..29, 2: 30..56, 3: 57..83, 4: 111..138, 5: 138..165.
+        // Of course, this algorithm can be more complex.
+        recalculateImportances: function () {
             var importanceRange = 0,
-                volumesCount = TopicModelImportanceLevels.length;
+                volumesCount = TopicModelImportanceLevels.length,
+                volumes = _.map(this.models, function (model) {
+                        return model.get('volume');
+                    });
+
+            var maxVolume = _.max(volumes),
+                // subtract 1 to push the lowest volumes into step1 (instead of step0)
+                minVolume = _.min(volumes) - 1, 
+                rangeLength = (maxVolume - minVolume) / volumesCount;
 
             _.each(this.models, function (el, ind) {
-                el.set('importance', volumesCount - importanceRange - 1);
-                if (ind % volumesCount === 0) {
-                    importanceRange++;
-                }
+                var importance = volumesCount - (el.get('volume') - minVolume) / rangeLength ;
+                el.set('importance', parseInt(importance));
             });
+
         }
     })
  
