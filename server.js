@@ -4,6 +4,7 @@ var http      = require('http'),
     fs        = require('fs'),
     sys       = require('sys');
 
+var port = Number(process.env.PORT || 5001);
 
 http.createServer(function (request, response) {
     var uri = url.parse(request.url).pathname;
@@ -36,6 +37,6 @@ http.createServer(function (request, response) {
             response.end();
         });
     });
-}).listen(Number(process.env.PORT || 5000));
+}).listen(port);
 
-console.log('Server running...');
+console.log('Server running on port: ' + port);
